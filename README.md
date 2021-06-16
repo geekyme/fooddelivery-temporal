@@ -1,3 +1,7 @@
+# About this repo
+
+This is a demo to show how [temporal](https://temporal.io/) could be used to orchestrate a food delivery's actors - restaurant, courier, and the order
+
 ## Prerequisites
 
 Install [docker](https://www.docker.com/get-started)
