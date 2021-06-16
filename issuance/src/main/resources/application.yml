@@ -1,0 +1,11 @@
+server:
+  port: 8082
+temporal:
+  host: localhost:7233
+  worker-threads: 50
+  activity-threads: 50
+
+dgs:
+  graphql:
+    schema-locations:
+      - classpath*:custom-schema/**/*.graphql*

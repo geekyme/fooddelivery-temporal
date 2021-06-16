@@ -1,0 +1,12 @@
+type Mutation {
+  fulfillOrder(order: OrderInput!, isLoadtest: Boolean): OrderWorkflow!
+  cancelOrder(order: OrderInput!): OrderWorkflow!
+}
+
+input OrderInput {
+  id: String
+}
+
+type OrderWorkflow {
+  id: String
+}

@@ -1,0 +1,47 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'com.google.cloud.tools.jib' version '3.0.0'
+}
+
+sourceCompatibility = '11'
+
+jib {
+  from {
+    image = 'gcr.io/distroless/java:11'
+  }
+
+  to {
+    image = 'local/restaurant'
+  }
+  // to {
+  //   image = ecr_repo_url
+  //   auth {
+  //     username = 'AWS'
+  //     password = System.getenv('ECR_LOGIN_PASSWORD')
+  //   }
+  //   tags = [ecr_image_tag]
+  // }
+  container {
+    jvmFlags = ['-Xms1024m']
+    args = []
+    ports = ['8081']
+  }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:latest.release'
+    implementation project(':restaurant-api')
+    implementation 'io.temporal:temporal-sdk:1.0.7'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,56 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'com.netflix.dgs.codegen' version '4.6.4'
+    id 'com.google.cloud.tools.jib' version '3.0.0'
+}
+
+group = 'io.shawnlim.eats'
+sourceCompatibility = '11'
+
+jib {
+  from {
+    image = 'gcr.io/distroless/java:11'
+  }
+
+  to {
+    image = 'local/issuance'
+  }
+  // to {
+  //   image = ecr_repo_url
+  //   auth {
+  //     username = 'AWS'
+  //     password = System.getenv('ECR_LOGIN_PASSWORD')
+  //   }
+  //   tags = [ecr_image_tag]
+  // }
+  container {
+    jvmFlags = ['-Xms1024m']
+    args = []
+    ports = ['8082']
+  }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:latest.release'
+    implementation 'io.temporal:temporal-sdk:1.0.7'
+    implementation project(':restaurant-api')
+    implementation project(':courier-api')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+generateJava {
+  schemaPaths = ["${projectDir}/src/main/resources/custom-schema"] // List of directories containing schema files
+  packageName = 'io.shawnlim.eats.issuance.generated' // The package name to use to generate sources
+  generateClient = true // Enable generating the type safe query API
+}

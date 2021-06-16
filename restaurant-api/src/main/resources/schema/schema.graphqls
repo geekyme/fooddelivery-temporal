@@ -1,0 +1,12 @@
+type Mutation {
+  acceptOrder(order: OrderInput!): OrderWorkflow!
+}
+
+input OrderInput {
+  id: String
+}
+
+type OrderWorkflow {
+  id: String
+  status: String
+}

@@ -1,0 +1,15 @@
+type Mutation {
+  courierAcceptOrder(order: OrderInput!): OrderWorkflow!
+  courierCancelOrder(order: OrderInput!): OrderWorkflow!
+  courierNearCustomer(order: OrderInput!): OrderWorkflow!
+  courierDeliveredOrder(order: OrderInput!): OrderWorkflow!
+}
+
+input OrderInput {
+  id: String
+}
+
+type OrderWorkflow {
+  id: String
+  status: String
+}

@@ -1,0 +1,6 @@
+server:
+  port: 8081
+temporal:
+  host: localhost:7233
+  worker-threads: 50
+  activity-threads: 50

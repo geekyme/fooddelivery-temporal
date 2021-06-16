@@ -1,0 +1,49 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.google.cloud.tools.jib' version '3.0.0'
+    id 'java'
+}
+
+sourceCompatibility = '11'
+
+jib {
+  from {
+    image = 'gcr.io/distroless/java:11'
+  }
+
+  to {
+    image = 'local/courier'
+  }
+  // to {
+  //   image = ecr_repo_url
+  //   auth {
+  //     username = 'AWS'
+  //     password = System.getenv('ECR_LOGIN_PASSWORD')
+  //   }
+  //   tags = [ecr_image_tag]
+  // }
+  container {
+    jvmFlags = ['-Xms1024m']
+    args = []
+    ports = ['8083']
+  }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('org.mock-server:mockserver-netty:5.11.2')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:latest.release'
+    implementation project(':courier-api')
+    implementation 'io.temporal:temporal-sdk:1.0.7'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
