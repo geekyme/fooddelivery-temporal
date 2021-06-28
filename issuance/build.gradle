@@ -15,7 +15,7 @@ jib {
   }
 
   to {
-    image = 'local/issuance'
+    image = 'shawnlim/issuance'
   }
   // to {
   //   image = ecr_repo_url

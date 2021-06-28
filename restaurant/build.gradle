@@ -13,7 +13,7 @@ jib {
   }
 
   to {
-    image = 'local/restaurant'
+    image = 'shawnlim/restaurant'
   }
   // to {
   //   image = ecr_repo_url

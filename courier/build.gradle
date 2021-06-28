@@ -13,7 +13,7 @@ jib {
   }
 
   to {
-    image = 'local/courier'
+    image = 'shawnlim/courier'
   }
   // to {
   //   image = ecr_repo_url
