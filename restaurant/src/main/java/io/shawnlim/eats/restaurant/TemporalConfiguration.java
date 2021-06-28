@@ -29,7 +29,7 @@ public class TemporalConfiguration {
 
   @Bean
   public WorkflowClient client() {
-    WorkflowServiceStubsOptions options = WorkflowServiceStubsOptions.newBuilder().setTarget(temporalHost).build();
+    WorkflowServiceStubsOptions options = WorkflowServiceStubsOptions.newBuilder().setEnableHttps(true).setTarget(temporalHost).build();
     WorkflowServiceStubs service = WorkflowServiceStubs.newInstance(options);
     WorkflowClient client = WorkflowClient.newInstance(service);
     
