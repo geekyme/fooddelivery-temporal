@@ -36,6 +36,7 @@ repositories {
 
 dependencies {
     implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter:latest.release'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation project(':restaurant-api')
     implementation 'io.temporal:temporal-sdk:1.0.7'
     implementation 'org.springframework.boot:spring-boot-starter-web'
