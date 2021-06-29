@@ -2,8 +2,8 @@ server:
   port: 8083
 temporal:
   host: localhost:7233
-  worker-threads: 50
-  activity-threads: 50
+  worker-threads: 10
+  activity-threads: 10
 
 logging:
   level:
