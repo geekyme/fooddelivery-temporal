@@ -9,7 +9,7 @@ sourceCompatibility = '11'
 
 jib {
   from {
-    image = 'openjdk:11-jre-slim'
+    image = 'openjdk:11-jre'
   }
 
   to {
