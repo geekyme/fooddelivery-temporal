@@ -22,9 +22,6 @@ public class TemporalConfiguration {
   @Value("${temporal.worker-threads}")
   Integer workerThreads;
 
-  @Value("${temporal.activity-threads}")
-  Integer activityThreads;
-
   public static final String ISSUANCE_WORKFLOW_TASK_QUEUE = "IssuanceWorkflowQueue";
   public static final String ISSUANCE_ACTIVITIES_TASK_QUEUE = "IssuanceActivitiesQueue";
 
@@ -48,11 +45,11 @@ public class TemporalConfiguration {
     // its better to separate activity and workflow workers, 
     // and usually this is done in separate processes to scale up these things individually
     Worker workflowWorker = factory.newWorker(ISSUANCE_WORKFLOW_TASK_QUEUE, WorkerOptions.newBuilder()
-      .setActivityPollThreadCount(activityThreads)
+      .setWorkflowPollThreadCount(workerThreads / 2)
       .build()
     );
     Worker activityWorker = factory.newWorker(ISSUANCE_ACTIVITIES_TASK_QUEUE, WorkerOptions.newBuilder()
-      .setActivityPollThreadCount(activityThreads)
+      .setActivityPollThreadCount(workerThreads / 2)
       .build()
     );
     

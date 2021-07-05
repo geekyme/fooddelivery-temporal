@@ -3,7 +3,6 @@ server:
 temporal:
   host: localhost:7233
   worker-threads: 10
-  activity-threads: 10
 
 logging:
   level:

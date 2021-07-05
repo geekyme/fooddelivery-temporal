@@ -24,9 +24,6 @@ public class TemporalConfiguration {
   @Value("${temporal.worker-threads}")
   Integer workerThreads;
 
-  @Value("${temporal.activity-threads}")
-  Integer activityThreads;
-
   @Bean
   public WorkflowClient client() {
     WorkflowServiceStubsOptions options = WorkflowServiceStubsOptions.newBuilder().setEnableHttps(true).setTarget(temporalHost).build();
@@ -47,12 +44,12 @@ public class TemporalConfiguration {
     // its better to separate activity and workflow workers, 
     // and usually this is done in separate processes to scale up these things individually
     Worker workflowWorker = factory.newWorker(RestaurantOrderWorkflow.RESTAURANT_ORDER_WORKFLOW_TASK_QUEUE, WorkerOptions.newBuilder()
-      .setActivityPollThreadCount(activityThreads)
+      .setWorkflowPollThreadCount(workerThreads / 2)
       .build()
     );
 
     Worker activityWorker = factory.newWorker(RestaurantOrderActivities.RESTAURANT_ORDER_ACTIVITIES_TASK_QUEUE, WorkerOptions.newBuilder()
-      .setActivityPollThreadCount(activityThreads)
+      .setActivityPollThreadCount(workerThreads / 2)
       .build()
     );
     
