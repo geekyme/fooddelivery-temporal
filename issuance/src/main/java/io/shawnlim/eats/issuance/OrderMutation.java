@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import io.shawnlim.eats.issuance.generated.types.OrderInput;
 import io.shawnlim.eats.issuance.generated.types.OrderWorkflow;
-import io.shawnlim.eats.issuance.workflows.IssuanceWorkflow;
+import io.shawnlim.eats.issuance.workflows.SimpleWorkflow;
 import io.temporal.api.common.v1.WorkflowExecution;
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
@@ -25,7 +25,7 @@ public class OrderMutation {
         .setTaskQueue(TemporalConfiguration.ISSUANCE_WORKFLOW_TASK_QUEUE)
         .setWorkflowId(order.getId()).build();
         
-    IssuanceWorkflow workflow = workflowClient.newWorkflowStub(IssuanceWorkflow.class, options);
+    SimpleWorkflow workflow = workflowClient.newWorkflowStub(SimpleWorkflow.class, options);
 
     WorkflowExecution workflowExecution = WorkflowClient.start(workflow::start, order, isLoadtest);
 

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import io.shawnlim.eats.issuance.activities.IssuanceActivitiesImpl;
-import io.shawnlim.eats.issuance.workflows.IssuanceWorkflowImpl;
+import io.shawnlim.eats.issuance.workflows.SimpleWorkflowImpl;
 import io.temporal.client.WorkflowClient;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.serviceclient.WorkflowServiceStubsOptions;
@@ -53,7 +53,7 @@ public class TemporalConfiguration {
       .build()
     );
     
-    workflowWorker.registerWorkflowImplementationTypes(IssuanceWorkflowImpl.class);
+    workflowWorker.registerWorkflowImplementationTypes(SimpleWorkflowImpl.class);
     activityWorker.registerActivitiesImplementations(new IssuanceActivitiesImpl());
 
     factory.start();
