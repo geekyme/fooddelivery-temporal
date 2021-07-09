@@ -3,6 +3,8 @@ server:
 temporal:
   host: localhost:7233
   worker-threads: 10
+  max-activities: 200
+  max-workflows: 200
 
 logging:
   level:

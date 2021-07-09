@@ -25,9 +25,15 @@ public class TemporalConfiguration {
   @Value("${temporal.worker-threads}")
   Integer workerThreads;
 
+  @Value("${temporal.max-activities}")
+  Integer maxActivities;
+
+  @Value("${temporal.max-workflows}")
+  Integer maxWorkflows;
+
   @Bean
   public WorkflowClient client(WebClient mockHttpClient) {
-    WorkflowServiceStubsOptions options = WorkflowServiceStubsOptions.newBuilder().setEnableHttps(true).setTarget(temporalHost).build();
+    WorkflowServiceStubsOptions options = WorkflowServiceStubsOptions.newBuilder().setTarget(temporalHost).build();
     WorkflowServiceStubs service = WorkflowServiceStubs.newInstance(options);
     WorkflowClient client = WorkflowClient.newInstance(service);
     
@@ -46,11 +52,13 @@ public class TemporalConfiguration {
     // and usually this is done in separate processes to scale up these things individually
     Worker workflowWorker = factory.newWorker(CourierOrderWorkflow.COURIER_ORDER_WORKFLOW_TASK_QUEUE, WorkerOptions.newBuilder()
       .setWorkflowPollThreadCount(workerThreads / 2)
+      .setMaxConcurrentWorkflowTaskExecutionSize(maxWorkflows)
       .build()
     );
 
     Worker activityWorker = factory.newWorker(CourierOrderActivities.COURIER_ORDER_ACTIVITIES_TASK_QUEUE, WorkerOptions.newBuilder()
       .setActivityPollThreadCount(workerThreads / 2)
+      .setMaxConcurrentActivityExecutionSize(maxActivities)
       .build()
     );
     
